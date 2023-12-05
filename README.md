@@ -5,7 +5,7 @@ Compile everything with bash foo.sh
 ```
 And then run servers and client in 3 terimnals with
 ```
-./server_one
-./server_two
-./client
+./bin/server_one
+./bin/server_two
+./bin/client
 ```
