@@ -1,7 +1,7 @@
 # Client-server app on C++
 Compile everything with bash foo.sh
 ```
-./foo.sh
+./foo.bat
 ```
 And then run servers and client in 3 terimnals with
 ```
