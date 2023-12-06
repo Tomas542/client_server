@@ -51,7 +51,7 @@ int main(void) {
 
   while (1) {
 
-    // We haven't choose the server
+    // We haven't choosen the server
     if (current_server == 0) {
 
       // Client gave server number we don't have

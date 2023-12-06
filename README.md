@@ -1,6 +1,7 @@
 # Client-server app on C++
-Compile everything with bash foo.sh
+Give bash file permisions and compile everything with bash foo.sh 
 ```
+chmod a+x foo.sh
 ./foo.sh
 ```
 And then run servers and client in 3 terimnals with
