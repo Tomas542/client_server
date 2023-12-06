@@ -1,5 +1,5 @@
 # Client-server app on C++
-Compile everything with bash foo.sh
+Compile everything with bat foo.ифе
 ```
 .\foo.bat
 ```
