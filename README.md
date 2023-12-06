@@ -1,11 +1,11 @@
 # Client-server app on C++
 Compile everything with bash foo.sh
 ```
-./foo.bat
+.\foo.bat
 ```
 And then run servers and client in 3 terimnals with
 ```
-./bin/server_one
-./bin/server_two
-./bin/client
+.\bin\server_one
+.\bin\server_two
+.\bin\client
 ```
