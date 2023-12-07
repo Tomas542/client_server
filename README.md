@@ -6,7 +6,9 @@ chmod a+x foo.sh
 ```
 And then run servers and client in 3 terimnals with
 ```
+./bin/log_one
 ./bin/server_one
+./bin/log_one
 ./bin/server_two
 ./bin/client
 ```

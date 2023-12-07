@@ -27,7 +27,7 @@ void connect(int* out_socket, int port) {
   // Address family IPv4, port 9876, address only in local
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(port);
-  server_addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+  server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
   // Connect though socket to address with adrlen
   if (connect(*out_socket, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1) {
