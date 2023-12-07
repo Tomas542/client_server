@@ -13,7 +13,7 @@
 void task_one(int acception)
 {
 
-	std::string message{"Amount of processes in the system is equal to "};
+	std::string message{"Architexture of the CPU is "};
 	SYSTEM_INFO siSysInfo;
 	GetSystemInfo(&siSysInfo);
 	switch (siSysInfo.dwOemId)
