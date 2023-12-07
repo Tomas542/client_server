@@ -2,6 +2,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QTextEdit>
 #include <QDebug>
 #include <winsock2.h>
 #include <windows.h>
@@ -39,7 +40,11 @@ void connection(int port)
     qDebug() << "Connected to server: " << current_server - 1 << " socket: " << _socket[current_server - 1];
 }
 
-void numberCommands(std::string numberBtn)
+void updateTextEdit(QTextEdit* textEdit, const QString& newText) {
+    textEdit->setPlainText(newText);
+}
+
+void numberCommands(std::string numberBtn, QTextEdit* textBox)
 {
     qDebug() << "Button" << numberBtn << "clicked";
     char buff[128];
@@ -48,9 +53,11 @@ void numberCommands(std::string numberBtn)
 
     recv(_socket[current_server - 1], buff, sizeof(buff), 0);
     qDebug() << buff;
+
+    updateTextEdit(textBox, QString(buff));
 }
 
-void switchCommand()
+void switchCommand(QTextEdit* textBox)
 {
     qDebug() << "Switch button clicked";
     current_server = (current_server == 1) ? 2 : 1;
@@ -59,6 +66,8 @@ void switchCommand()
     {
         connection(current_server == 1 ? PORT_FST : PORT_SND);
     }
+
+    updateTextEdit(textBox, QString("The server has been switched. Waiting for the command."));
 }
 
 void closeCommand(QApplication& app)
@@ -89,31 +98,39 @@ int main(int argc, char** argv) {
 
     QHBoxLayout *numberButtonsLayout = new QHBoxLayout;
     QHBoxLayout *funcButtonsLayout = new QHBoxLayout;
+    QHBoxLayout *textBoxLayout = new QHBoxLayout;
 
     QPushButton button1("1");
     QPushButton button2("2");
     QPushButton switchButton("Switch");
     QPushButton closeButton("Close");
 
+    // QTextEdit textBox();
+    QTextEdit textBox(&mainWindow);
+    textBox.setPlaceholderText("The output will appear soon"); // Placeholder text
+    textBox.setReadOnly(true);
+
     numberButtonsLayout->addWidget(&button1);
     numberButtonsLayout->addWidget(&button2);
     funcButtonsLayout->addWidget(&switchButton);
     funcButtonsLayout->addWidget(&closeButton);
+    textBoxLayout->addWidget(&textBox);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(&mainWindow);
     mainLayout->addLayout(numberButtonsLayout);
     mainLayout->addLayout(funcButtonsLayout);
+    mainLayout->addLayout(textBoxLayout);
 
     mainWindow.setLayout(mainLayout);
     mainWindow.show();
 
     connection(PORT_FST); // Initial connection
 
-    QObject::connect(&button1, &QPushButton::clicked, std::bind(&numberCommands, "1"));
+    QObject::connect(&button1, &QPushButton::clicked, std::bind(&numberCommands, "1", &textBox));
 
-    QObject::connect(&button2, &QPushButton::clicked, std::bind(&numberCommands, "2"));
+    QObject::connect(&button2, &QPushButton::clicked, std::bind(&numberCommands, "2", &textBox));
 
-    QObject::connect(&switchButton, &QPushButton::clicked, std::bind(&switchCommand));
+    QObject::connect(&switchButton, &QPushButton::clicked, std::bind(&switchCommand, &textBox));
 
     QObject::connect(&closeButton, &QPushButton::clicked, std::bind(&closeCommand, std::ref(guiApp)));
 
